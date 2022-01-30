@@ -17,7 +17,7 @@ const walk = (dir) => {
   list.forEach((file) => {
     if (isExcluded(file)) return;
     file = `${dir}/${file}`;
-    const stat = fs.lstatSync(file);
+    const stat = fs.statSync(file);
     if (stat && stat.isDirectory()) results = results.concat(walk(file));
     else results.push(file);
   });
@@ -36,7 +36,7 @@ if (process.argv.length < 3) {
 
 const dir = process.argv[2];
 
-if (!fs.existsSync(dir) || !fs.lstatSync(dir).isDirectory()) {
+if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) {
   throwError(format(config.cli.messages.invalidDirectory, dir));
 }
 
